@@ -27,7 +27,7 @@ public class ConcurrentCancelReserveSimulator {
                     ReservationServiceGrpc.newBlockingStub(channel);
 
             CancelReservationRequest cancelRequest = CancelReservationRequest.newBuilder()
-                    .setConcertId("rockfest2025")
+                    .setConcertId("rockfest2027")
                     .setUserId("user123") // Make sure userA has already reserved!
                     .build();
 
@@ -44,7 +44,11 @@ public class ConcurrentCancelReserveSimulator {
         for (int i = 1; i <= 4; i++) {
             final int userNum = i;
             new Thread(() -> {
-                ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
+                EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
+                String target = selector.selectNode();
+                System.out.println("📍 Selected node for this request: " + target);
+
+                ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
                         .usePlaintext()
                         .build();
 
@@ -52,7 +56,7 @@ public class ConcurrentCancelReserveSimulator {
                         ReservationServiceGrpc.newBlockingStub(channel);
 
                 ReserveRequest reserveRequest = ReserveRequest.newBuilder()
-                        .setConcertId("rockfest2025")
+                        .setConcertId("rockfest2027")
                         .setUserId("racer" + userNum)
                         .setSeatTier("VIP")
                         .setIncludeAfterParty(false)

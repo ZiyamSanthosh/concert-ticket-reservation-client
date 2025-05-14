@@ -24,7 +24,7 @@ public class UpdateConcertClient {
                         .setTotalSeats(180)
                         .setPrice(48.00)
                         .build())
-                .setAfterPartyTickets(25)
+                .setAfterPartyTickets(40)
                 .build();
 
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)

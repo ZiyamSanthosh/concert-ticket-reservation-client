@@ -13,7 +13,7 @@ public class CancelConcertClient {
         System.out.println("📍 Sending cancelConcert request to: " + target);
 
         CancelConcertRequest request = CancelConcertRequest.newBuilder()
-                .setConcertId("rockfest2026")
+                .setConcertId("rockfest2027")
                 .build();
 
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)

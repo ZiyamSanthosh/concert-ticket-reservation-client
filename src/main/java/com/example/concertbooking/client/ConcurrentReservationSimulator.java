@@ -34,7 +34,7 @@ public class ConcurrentReservationSimulator {
 
                 String userId = "user" + userNum;
                 ReserveRequest request = ReserveRequest.newBuilder()
-                        .setConcertId("rockfest2025")
+                        .setConcertId("rockfest2027")
                         .setUserId(userId)
                         .setSeatTier("VIP")
                         .setIncludeAfterParty(false)
