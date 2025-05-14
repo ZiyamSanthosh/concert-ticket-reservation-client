@@ -10,7 +10,7 @@ public class UpdateConcertClient {
 
         EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
         String target = selector.selectNode();
-        System.out.println("📍 Sending updateConcert request to: " + target);
+        System.out.println("Sending updateConcert request to: " + target);
 
         UpdateConcertRequest request = UpdateConcertRequest.newBuilder()
                 .setConcertId("rockfest2027")
@@ -35,7 +35,7 @@ public class UpdateConcertClient {
                 ConcertServiceGrpc.newBlockingStub(channel);
 
         ConcertResponse response = stub.updateConcert(request);
-        System.out.println("🛠️ Update Response: " + response.getMessage());
+        System.out.println("Update Response: " + response.getMessage());
 
         channel.shutdown();
     }

@@ -19,20 +19,23 @@ public class EtcdNodeSelector {
     private final String etcdUrl;
 
     public EtcdNodeSelector(String etcdUrl) {
-        this.etcdUrl = etcdUrl; // e.g., http://localhost:2379
+
+        this.etcdUrl = etcdUrl;
     }
 
     public String selectNode() {
+
         List<String> nodes = getRegisteredNodes();
         if (nodes.isEmpty()) {
             throw new IllegalStateException("No nodes registered in etcd.");
         }
-        // You can use round-robin, random, etc. Here we use random
+
         Collections.shuffle(nodes);
-        return nodes.get(0); // Pick one node to connect
+        return nodes.get(0);
     }
 
     private List<String> getRegisteredNodes() {
+
         List<String> nodes = new ArrayList<>();
         try {
             URL url = new URL(etcdUrl + "/v3/kv/range");
@@ -69,17 +72,19 @@ public class EtcdNodeSelector {
 
             conn.disconnect();
         } catch (Exception e) {
-            System.out.println("❌ etcd fetch error: " + e.getMessage());
+            System.out.println("etcd fetch error: " + e.getMessage());
         }
 
         return nodes;
     }
 
     private String base64(String str) {
+
         return Base64.getEncoder().encodeToString(str.getBytes(StandardCharsets.UTF_8));
     }
 
     private String getPrefixEnd(String prefix) {
+
         byte[] bytes = prefix.getBytes(StandardCharsets.UTF_8);
         bytes[bytes.length - 1]++;
         return new String(bytes, StandardCharsets.UTF_8);

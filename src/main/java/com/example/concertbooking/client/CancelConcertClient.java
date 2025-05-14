@@ -10,7 +10,7 @@ public class CancelConcertClient {
 
         EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
         String target = selector.selectNode();
-        System.out.println("📍 Sending cancelConcert request to: " + target);
+        System.out.println("Sending cancelConcert request to: " + target);
 
         CancelConcertRequest request = CancelConcertRequest.newBuilder()
                 .setConcertId("rockfest2027")
@@ -24,7 +24,7 @@ public class CancelConcertClient {
                 ConcertServiceGrpc.newBlockingStub(channel);
 
         ConcertResponse response = stub.cancelConcert(request);
-        System.out.println("❌ Cancel Response: " + response.getMessage());
+        System.out.println("Cancel Response: " + response.getMessage());
 
         channel.shutdown();
     }

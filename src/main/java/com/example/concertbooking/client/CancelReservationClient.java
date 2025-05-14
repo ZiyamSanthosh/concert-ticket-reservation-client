@@ -9,14 +9,10 @@ import io.grpc.ManagedChannelBuilder;
 public class CancelReservationClient {
 
     public static void main(String[] args) {
-        // Connect to gRPC server
-//        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
-//                .usePlaintext()
-//                .build();
 
         EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
         String target = selector.selectNode();
-        System.out.println("📍 Selected node for this request: " + target);
+        System.out.println("Selected node for this request: " + target);
 
         // Connect to the server using etcd
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
@@ -35,7 +31,7 @@ public class CancelReservationClient {
         // Send cancel request
         ReservationResponse response = stub.cancelReservation(request);
 
-        System.out.println("❌ Cancel Response: " + response.getMessage());
+        System.out.println("Cancel Response: " + response.getMessage());
 
         channel.shutdown();
     }

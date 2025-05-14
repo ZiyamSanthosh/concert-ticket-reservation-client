@@ -10,14 +10,11 @@ import io.grpc.ManagedChannelBuilder;
 public class ConcurrentCancelReserveSimulator {
 
     public static void main(String[] args) throws InterruptedException {
-        // Step 1: Cancel a reservation by userA in a separate thread
+
         new Thread(() -> {
-//            ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
-//                    .usePlaintext()
-//                    .build();
             EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
             String target = selector.selectNode();
-            System.out.println("📍 Selected node for this request: " + target);
+            System.out.println("Selected node for this request: " + target);
 
             // Connect to the server using etcd
             ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
@@ -28,7 +25,7 @@ public class ConcurrentCancelReserveSimulator {
 
             CancelReservationRequest cancelRequest = CancelReservationRequest.newBuilder()
                     .setConcertId("rockfest2027")
-                    .setUserId("user123") // Make sure userA has already reserved!
+                    .setUserId("user123") // Make sure user123 has already reserved!
                     .build();
 
             ReservationResponse cancelResponse = stub.cancelReservation(cancelRequest);
@@ -46,7 +43,7 @@ public class ConcurrentCancelReserveSimulator {
             new Thread(() -> {
                 EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
                 String target = selector.selectNode();
-                System.out.println("📍 Selected node for this request: " + target);
+                System.out.println("Selected node for this request: " + target);
 
                 ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
                         .usePlaintext()

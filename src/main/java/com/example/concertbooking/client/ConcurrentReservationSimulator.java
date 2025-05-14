@@ -15,14 +15,10 @@ public class ConcurrentReservationSimulator {
         for (int i = 0; i < threads; i++) {
             final int userNum = i;
             new Thread(() -> {
-                // Each thread makes its own gRPC channel and stub
-//                ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051)
-//                        .usePlaintext()
-//                        .build();
 
                 EtcdNodeSelector selector = new EtcdNodeSelector("http://localhost:2379");
                 String target = selector.selectNode();
-                System.out.println("📍 Selected node for this request: " + target);
+                System.out.println("Selected node for this request: " + target);
 
                 // Connect to the server using etcd
                 ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
